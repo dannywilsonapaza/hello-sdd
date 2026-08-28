@@ -1,16 +1,8 @@
 # Constitución — habits-cli
 
-Principios innegociables. Toda spec, plan y tarea debe cumplirlos.
-
-1. **Simplicidad primero**: Python 3.12+ y solo biblioteca estándar en la
-   aplicación. Única dependencia de desarrollo permitida: pytest.
-2. **La spec manda**: ningún comportamiento se implementa si no está en la
-   spec activa. Si falta una decisión, se detiene el trabajo y se pregunta.
-3. **Lógica separada de interfaz**: el núcleo (core) no imprime ni lee de
-   consola. La CLI es una capa fina. Todo el core es testeable sin la CLI.
-4. **Tests como puerta**: cada tarea termina con sus tests en verde.
-   Prohibido avanzar con tests en rojo.
-5. **Datos locales y transparentes**: persistencia en un único archivo JSON
-   legible. Nada de bases de datos ni de red.
-6. **Idioma**: código e identificadores en inglés; mensajes al usuario y
-   documentación en español.
+1. **Stack mínimo.** Python 3.12+ y solo biblioteca estándar; la única dependencia de desarrollo es `pytest`. Añadir otra exige modificar antes este archivo.
+2. **La spec manda.** Todo cambio de comportamiento se escribe primero en `specs/<feature>/spec.md`; no se acepta código sin spec aprobada que lo respalde.
+3. **Núcleo puro.** `habits/core.py` no importa `argparse`, `sys` ni hace E/S ni `print`: recibe datos y devuelve datos. `habits/cli.py` solo parsea argumentos, llama al núcleo e imprime.
+4. **Tests siempre verdes.** Cada función pública del núcleo tiene al menos un test de caso normal y uno de borde; `pytest -q` pasa al 100% antes de cada commit.
+5. **Persistencia simple y explícita.** Un único archivo JSON local, leído y escrito solo desde `habits/storage.py`; cambiar su formato exige actualizar la spec y documentar la migración.
+6. **Idioma fijo.** Identificadores, comentarios y docstrings en inglés; todos los mensajes visibles al usuario, en español.
